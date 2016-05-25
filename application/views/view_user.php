@@ -1,5 +1,5 @@
 <center>
-	<h1>CRUD</h1>
+	<h1>DATA USER</h1>
 	<a href="<?php echo base_url(); ?>index.php/crud_user/tambah_user">Tambah</a> <br />
 	<table border="1">
 		<tr>

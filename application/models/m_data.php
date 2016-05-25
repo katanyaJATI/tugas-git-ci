@@ -1,6 +1,7 @@
 <?php
 class M_data extends CI_Model{
-	function ambil_dataus(){
+
+	function ambil_dataus(){ // select table user
 		return $this->db->get('tb_user');
 	}
 
@@ -8,11 +9,11 @@ class M_data extends CI_Model{
 		$this->db->insert($table,$data);
 	}
 
-	function ubah_dataus($where,$table){
+	function ubah_dataus($where,$table){ // select table user untuk update
 		return $this->db->get_where($table,$where);
 	}
 
-	function update_dataus($where,$data,$table){
+	function update_dataus($where,$data,$table){ // update user
 		$this->db->where($where);
 		$this->db->update($table,$data);
 	}
@@ -21,5 +22,31 @@ class M_data extends CI_Model{
 		$this->db->where($where);
 		$this->db->delete($table);
 	}
+
+/* ------------------------------  BATAS  ----------------------------------*/
+
+	function ambil_databm(){ // select table bookmark
+		return $this->db->get('tb_bookmark');
+	}
+
+	function input_databm($data,$table){ // Inser data bookmark
+		$this->db->insert($table,$data);
+	}
+
+	function ubah_databm($where,$table){ // select table bookmark untuk update
+		return $this->db->get_where($table,$where);
+	}
+
+	function update_databm($where,$data,$table){ // update bookmark
+		$this->db->where($where);
+		$this->db->update($table,$data);
+	}
+
+	function hapus_databm($where,$table){ // Hapus data bookmark
+		$this->db->where($where);
+		$this->db->delete($table);
+	}
+
+
 }
 ?>
