@@ -7,6 +7,10 @@ class Crud_user extends CI_Controller{
 		parent::__construct();
 		$this->load->model('m_data');
 		$this->load->helper('url');
+
+		if($this->session->userdata('status') != "login"){
+			redirect(base_url(""));
+		}
 	}
 
 	function index(){ // Load halaman semua user

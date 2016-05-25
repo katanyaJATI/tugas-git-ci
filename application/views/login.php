@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div id="login">
 	<h2 style="text-align:center">Halaman Login</h2>
 	<div class="badan-login">
-		<form action="" method="POST">
+		<form action="<?php echo base_url('index.php/home/aksi_login'); ?>" method="POST">
 			<div class="form-group">
 				<input type="text" class="form-control" name="username" placeholder="USERNAME">
 			</div>
