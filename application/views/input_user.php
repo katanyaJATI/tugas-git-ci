@@ -1,7 +1,7 @@
 <center>
 	  <h1>CRUD Insert</h1>
 	  <h2>Tambah Data User</h2>
-	  <form action="<?php echo base_url(); ?>index.php/crud_user/tambah_user_aksi" method="POST">
+	  <form action="<?php echo base_url(); ?>index.php/home/tambah_user_aksi" method="POST">
 		Username <br />
 		<input type="text" name="username"> <br />
 		Password <br />

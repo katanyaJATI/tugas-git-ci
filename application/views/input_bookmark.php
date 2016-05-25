@@ -1,7 +1,7 @@
 <center>
 	  <h1>CRUD Insert</h1>
 	  <h2>Tambah Data Bookmark</h2>
-	  <form action="<?php echo base_url(); ?>index.php/crud_bookmark/tambah_bookmark_aksi" method="POST">
+	  <form action="<?php echo base_url(); ?>index.php/home/tambah_bookmark_aksi" method="POST">
 		Title <br />
 		<input type="text" name="title"> <br />
 		Url <br />

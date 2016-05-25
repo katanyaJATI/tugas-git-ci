@@ -1,7 +1,7 @@
 <center>
 	  <h1>CRUD Update</h1>
 	  <h2>Edit Data Bookmark</h2>
-	  <form action="<?php echo base_url().'index.php/crud_bookmark/ubah_bookmark_aksi';?>" method="POST">
+	  <form action="<?php echo base_url().'index.php/home/ubah_bookmark_aksi';?>" method="POST">
 	  <?php foreach($user as $u){ ?>
 		Username <br />
 		<input type="hidden" name="id" value="<?php echo $u->id ?>"> <br />
