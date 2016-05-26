@@ -55,10 +55,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div class="badan-login">
 		<form action="<?php echo base_url('index.php/login/aksi_login'); ?>" method="POST">
 			<div class="form-group">
-				<input type="text" class="form-control" name="username" placeholder="USERNAME">
+				<input type="text" class="form-control" name="username" placeholder="USERNAME" required="">
 			</div>
 			<div class="form-group">
-				<input type="password" class="form-control" name="password" placeholder="PASSWORD">
+				<input type="password" class="form-control" name="password" placeholder="PASSWORD" required="">
 			</div>
 			<div class="form-group" style="text-align:right">
 				<button type="submit" class="button button-default" name="login">LOGIN</button>
