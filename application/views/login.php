@@ -21,7 +21,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			margin-bottom:0;
 			font-size:14px;
 			font-weight:400;
-			background-image:none;
 			border:1px solid #ccc;
 		}
 		.button-default{
@@ -44,6 +43,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  	color: #555;
 		  	background-color: #fff;
 		  	border: 1px solid #000;
+		}
+		input{
+			text-align:center;
 		}
 	</style>
 </head>

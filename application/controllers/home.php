@@ -17,6 +17,7 @@ class Home extends CI_Controller{
 	function index(){ // Load halaman tambah bookmark
 		$this->load->view('templates/header');
 		$this->load->view('view_menu');
+		$this->load->view('body_menu');
 		$this->load->view('templates/footer');
 	}
 
@@ -53,13 +54,15 @@ class Home extends CI_Controller{
 			'description' => $description
 			);
 		$this->m_data->input_databm($data,'tb_bookmark');
-		redirect('home/lihat_bookmark');
+		echo"<script>alert('Data Berhasil Ditambah!');window.location='../home/lihat_bookmark'</script>";
+		
 	}
 
 	function hapus_bookmark($id){ // Aksi hapus bookmark, $id berguna untuk menangkap data id yang di kirim melalui url
 		$where = array('id' => $id);
 		$this->m_data->hapus_databm($where,'tb_bookmark');
-		redirect('home/lihat_bookmark');
+		echo"<script>alert('Data Berhasil Dihapus!');window.location='../lihat_bookmark'</script>";
+		//redirect('home/lihat_bookmark');
 	}
 
 	function ubah_bookmark($id){
@@ -86,7 +89,8 @@ class Home extends CI_Controller{
 			'id' => $id
 			);
 		$this->m_data->update_databm($where,$data,'tb_bookmark');
-		redirect('home/lihat_bookmark');
+		echo"<script>alert('Data Berhasil Dirubah!');window.location='../home/lihat_bookmark'</script>";
+		//redirect('home/lihat_bookmark');
 	}
 
 /* ------------------------- BATAS ---------------- */
@@ -115,13 +119,15 @@ class Home extends CI_Controller{
 			'password' => md5($password)
 			);
 		$this->m_data->input_dataus($data,'tb_user');
-		redirect('home/lihat_user');
+		echo"<script>alert('Data Berhasil Ditambah!');window.location='../home/lihat_user'</script>";
+		//redirect('home/lihat_user');
 	}
 
 	function hapus_user($id){ // Aksi hapus user, $id berguna untuk menangkap data id yang di kirim melalui url
 		$where = array('id' => $id);
 		$this->m_data->hapus_dataus($where,'tb_user');
-		redirect('home/lihat_user');
+		echo"<script>alert('Data Berhasil Dihapus!');window.location='../lihat_user'</script>";
+		//redirect('home/lihat_user');
 	}
 
 	function ubah_user($id){
@@ -136,6 +142,7 @@ class Home extends CI_Controller{
 	function ubah_user_aksi(){
 		$id = $this->input->post('id');
 		$username = $this->input->post('username');
+		$password_lm = $this->input->post('password_lm');
 		$password = $this->input->post('password');
 
 		$data = array(
@@ -143,10 +150,21 @@ class Home extends CI_Controller{
 			'password' => md5($password)
 			);
 		$where = array(
-			'id' => $id
+			'id' => $id,
+			'password' => md5($password_lm)
 			);
+
+		$cek_pw = $this->m_data->cek_password("tb_user",$where)->num_rows(); // Cek Password lama
+
+		if($cek_pw > 0){
 		$this->m_data->update_dataus($where,$data,'tb_user');
-		redirect('home/lihat_user');
+		echo"<script>alert('Data Berhasil Dirubah!');window.location='../home/lihat_user'</script>";
+		//redirect('home/lihat_user');
+		
+		}else{
+		echo"<script>alert('Password yang anda masukkan salah!');window.history.back();</script>";
+		}
+
 	}
 
 }

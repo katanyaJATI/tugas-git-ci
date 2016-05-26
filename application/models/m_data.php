@@ -13,6 +13,10 @@ class M_data extends CI_Model{
 		return $this->db->get_where($table,$where);
 	}
 
+	function cek_password($table,$where){
+		return $this->db->get_where($table,$where);
+	}
+
 	function update_dataus($where,$data,$table){ // update user
 		$this->db->where($where);
 		$this->db->update($table,$data);
@@ -46,6 +50,8 @@ class M_data extends CI_Model{
 		$this->db->where($where);
 		$this->db->delete($table);
 	}
+
+/* ------------------------------ BATAS --------------------------------- */
 
 	function cek_login($table,$where){
 		return $this->db->get_where($table,$where);

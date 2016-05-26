@@ -35,7 +35,8 @@ class Login extends CI_Controller{
 			redirect(base_url("index.php/home/"));
 		
 		}else{
-			echo"<center><h2>Username dan password salah! Harap Periksa <a href='../../'>kembali</a></h2></center>";
+			echo"<script>alert('Username / Password Salah!');window.history.back();</script>";
+			//echo"<center><h2>Username dan password salah! Harap Periksa <a href='../../'>kembali</a></h2></center>";
 		}
 	}
 
