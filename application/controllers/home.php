@@ -20,28 +20,6 @@ class Home extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
-	function aksi_login(){
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		$where = array(
-			'username' => $username,
-			'password' => md5($password)
-			);
-		$cek = $this->m_data->cek_login("tb_user",$where)->num_rows();
-		if($cek > 0){
-			$data_session = array(
-				'nama' => $username,
-				'status' => "login"
-				);
-
-			$this->session->set_userdata($data_session);
-			redirect(base_url("index.php/home/"));
-		
-		}else{
-			echo"<center><h2>Username dan password salah! Harap Periksa <a href='../../'>kembali</a></h2></center>";
-		}
-	}
-
 	function logout(){
 		$this->session->sess_destroy();
 		redirect(base_url(''));

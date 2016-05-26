@@ -1,4 +1,4 @@
-<center>
+<div style="padding:30px;text-align:center">
 	  <h1>CRUD Update</h1>
 	  <h2>Edit Data Bookmark</h2>
 	  <form action="<?php echo base_url().'index.php/home/ubah_bookmark_aksi';?>" method="POST">
@@ -15,4 +15,4 @@
 		<input type="reset" value="Reset">
 	  </form>
 		<?php } ?>
-</center>
+</div>
