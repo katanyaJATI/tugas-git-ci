@@ -5,24 +5,27 @@
 			<tr>
 				<th>No.</th>
 				<th>Username</th>
-				<th>password</th>
 				<th colspan="2">aksi</th>
 			</tr>
 			<?php 
 			$no = 0;
 			foreach($user as $u){
 			$no++; ?>
+					<?php 
+						if($u->username != $this->session->userdata('nama')){ ?>
 			<tr>
 				<td><?php echo $no; ?></td>
 				<td><?php echo $u->username; ?></td>
-				<td><?php echo $u->password; ?></td>
-				<td>
-					<?php echo anchor('home/ubah_user/'.$u->id,'Ubah'); ?>
-				</td>
-				<td>
-					<?php echo anchor('home/hapus_user/'.$u->id,'Hapus'); ?>
-				</td>
+				<th>
+					<button class="button button-default"><?php echo anchor('home/ubah_user/'.$u->id,'Ubah'); ?></button>
+				</th>
+				<th>
+							<button class="button button-default">
+							<?php echo anchor('home/hapus_user/'.$u->id,'Hapus'); ?>
+							</button>
+				</th>
 			</tr>
+						<?php }?>
 			<?php } ?>
 			<tr>
 				<td colspan="3"></td>

@@ -20,7 +20,7 @@
 			<label>Deskripsi</label>
 		</div>
 		<div class="form-group">
-			<textarea name="description" class="form-control" required="" style="height:100px"></textarea>
+			<textarea name="description" class="form-control" style="height:100px"></textarea>
 		</div>
 		<div class="form-group">
 			<button type="submit" class="button button-default">SIMPAN</button>

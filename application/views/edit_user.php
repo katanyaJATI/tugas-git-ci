@@ -10,7 +10,7 @@
 			<label>Username</label>
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" required="" name="username" value="<?php echo $u->username ?>">
+			<input type="text" class="form-control" readonly="" required="" name="username" value="<?php echo $u->username ?>">
 		</div>
 		<div class="form-group">
 			<label>Password Lama</label>
@@ -30,4 +30,5 @@
 		</div>
 	</form>
 		<?php } ?>
+</div>
 </div>

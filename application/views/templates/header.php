@@ -3,6 +3,9 @@
 <head>
 	<title>CRUD CI</title>
 	<style type="text/css">
+		body{
+			background-color: #ecf0f1;
+		}
 		table, td, th {
 		    border: 1px #ccc solid;
 		    padding: 6px;
@@ -45,11 +48,44 @@
 			color:#000;
 			background-color:rgb(189, 195, 199);
 		}
+		.button-info{
+			color:#fff;
+			background-color:rgb(52, 152, 219);
+		}
+		.button-info:hover{
+			color:#fff; 
+			background-color:rgb(41, 128, 185);
+		}
+		.button-success{
+			color:#fff; 
+			background-color:rgb(46, 204, 113);
+		}
+		.button-success:hover{
+			color:#fff;
+			background-color:rgb(39, 174, 96);
+		}
+		.button-danger{
+			color:#fff;
+			background-color:rgb(231, 76, 60);
+		}
+		.button-danger:hover{
+			color:#fff;
+			background-color:rgb(192, 57, 43);
+		}
+		.button-warning{
+			color:#fff;
+			background-color:rgb(241, 196, 15);
+		}
+		.button-warning:hover{
+			color:#fff;
+			background-color:rgb(243, 156, 18);
+		}
 		#container {
 			width:80%;
 			margin: 0 auto;
 			padding: 0px;
 			border: 1px solid #000;
+			background-color: #fff;
 		}
 
 		.nav {
@@ -60,29 +96,39 @@
 			position: relative;
 			padding: 0 0 0 4px;
 			margin: 0;
+		    background-color: #95a5a6;
 		}
 
-
-		.nav a, td a, th a{
+		.nav a{
+			color: #fff;
+			text-decoration: none;
+		}
+		td a, th a{
 			color: #000;
 			text-decoration: none;
 		}
-		.nav a:hover, td a:hover, th a:hover{
-			color: #ccc;
+		td a:hover, th a:hover{
+			color: #2c3e50;
+			text-decoration: none;
 		}
 		.nav > li {
 			display: inline-block;
 			text-align: center;
 		}
 		.nav > li > a {
-			padding:20px 18px;
+			padding: 15px;
 			display: block;
+			background-color: #7f8c8d;
+		}
+		.nav > li:hover > a {
+			background-color: #95a5a6;
 		}
 
 		.footer{
 			border-top: 1px solid #000;
 			text-align: center;
 			padding: 20px;
+			background-color: #95a5a6;
 		}
 	</style>
 </head>

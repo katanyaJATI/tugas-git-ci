@@ -36,6 +36,15 @@ class Home extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
+	function detail_bookmark($id){ // Load halaman semua bookmark
+		$where = array('id' => $id);
+		$data['user'] = $this->m_data->ubah_databm($where,'tb_bookmark')->result(); // meng-generate hasil query menjadi array
+		$this->load->view('templates/header');
+		$this->load->view('view_menu');
+		$this->load->view('view_detail_bookmark',$data);
+		$this->load->view('templates/footer');
+	}
+
 	function tambah_bookmark(){ // Load halaman tambah bookmark
 		$this->load->view('templates/header');
 		$this->load->view('view_menu');

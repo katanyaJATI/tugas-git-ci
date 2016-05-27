@@ -22,7 +22,7 @@
 			Deskripsi
 		</div>
 		<div class="form-group">
-			<textarea name="description" class="form-control" required="" style="height:100px"><?php echo $u->description ?></textarea>
+			<textarea name="description" class="form-control" style="height:100px"><?php echo $u->description ?></textarea>
 		</div>
 		<div class="form-group">
 			<button type="submit" class="button button-default">UBAH</button>
@@ -30,4 +30,5 @@
 		</div>
 	</form>
 	  <?php } ?>
+</div>
 </div>
