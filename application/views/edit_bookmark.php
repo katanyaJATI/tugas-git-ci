@@ -1,5 +1,4 @@
 <div style="padding:30px;text-align:center">
-	<h1>CRUD Update</h1>
 	<h2>Edit Data Bookmark</h2>
 	<div style="width:400px; margin:0 auto"> 
 
@@ -25,8 +24,8 @@
 			<textarea name="description" class="form-control" style="height:100px"><?php echo $u->description ?></textarea>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="button button-default">UBAH</button>
-			<button type="reset" class="button button-default">RESET</button>
+			<button type="submit" class="btn btn-primary">UBAH</button>
+			<button type="reset" class="btn btn-default">RESET</button>
 		</div>
 	</form>
 	  <?php } ?>

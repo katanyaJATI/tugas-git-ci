@@ -60,7 +60,7 @@ class Home extends CI_Controller{
 		$data = array(
 			'title' => $title,
 			'url' => $url,
-			'description' => $description
+			'description' => nl2br($description)
 			);
 		$this->m_data->input_databm($data,'tb_bookmark');
 		echo"<script>alert('Data Berhasil Ditambah!');window.location='../home/lihat_bookmark'</script>";
@@ -92,7 +92,7 @@ class Home extends CI_Controller{
 		$data = array(
 			'title' => $title,
 			'url' => $url,
-			'description' => $description
+			'description' => nl2br($description)
 			);
 		$where = array(
 			'id' => $id

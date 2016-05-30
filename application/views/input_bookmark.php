@@ -23,8 +23,8 @@
 			<textarea name="description" class="form-control" style="height:100px"></textarea>
 		</div>
 		<div class="form-group">
-			<button type="submit" class="button button-default">SIMPAN</button>
-			<button type="reset" class="button button-default">RESET</button>
+			<button type="submit" class="btn btn-primary">SIMPAN</button>
+			<button type="reset" class="btn btn-default">RESET</button>
 		</div>
 	</form>
 

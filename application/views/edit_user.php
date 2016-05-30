@@ -1,5 +1,4 @@
 <div style="padding:30px;text-align:center">
-	<h1>CRUD Update</h1>
 	<h2>Edit Data User</h2>
 	<div style="width:400px; margin:0 auto"> 
 	
@@ -25,8 +24,8 @@
 			<input type="password" class="form-control" required="" name="password" placeholder="masukkan password baru">
 		</div>
 		<div class="form-group">
-			<button type="submit" class="button button-default">UBAH</button>
-			<button type="reset" class="button button-default">RESET</button>
+			<button type="submit" class="btn btn-primary">UBAH</button>
+			<button type="reset" class="btn btn-default">RESET</button>
 		</div>
 	</form>
 		<?php } ?>
