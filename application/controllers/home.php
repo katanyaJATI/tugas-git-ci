@@ -135,8 +135,7 @@ class Home extends CI_Controller{
 	function hapus_user($id){ // Aksi hapus user, $id berguna untuk menangkap data id yang di kirim melalui url
 		$where = array('id' => $id);
 		$this->m_data->hapus_dataus($where,'tb_user');
-		echo"<script>alert('Data Berhasil Dihapus!');window.location='../lihat_user'</script>";
-		//redirect('home/lihat_user');
+		
 	}
 
 	function ubah_user($id){
