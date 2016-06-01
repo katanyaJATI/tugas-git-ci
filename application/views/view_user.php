@@ -1,4 +1,4 @@
-<table id="tabel" class="table table-striped ">
+<table id="tabel" class="table table-striped tampildata">
 	<thead>
     	<tr>
         	<th colspan="4">
@@ -13,21 +13,6 @@
         </tr>
     </thead>
     <tbody>
-    <?php 
-		$no = 0;
-		foreach($user as $u){
-			if($u->username != $this->session->userdata('nama')){
-			$no++; ?>
-    	<tr>
-        	<td><?php echo $no; ?></td>
-            <td><?php echo $u->username; ?></td>
-            <td>
-            	<?php echo anchor('home/ubah_user/'.$u->id,'<i class="fa fa-edit"> Ubah</i>', 'class="btn btn-default"'); ?>
-            	<button class="btn btn-default" data-toggle="modal" data-target="#ubh<?php echo $u->id; ?>"><i class="fa fa-edit"></i> Ubah Modal</button>
-            	<button class="btn btn-danger" data-toggle="modal" data-target="#hps<?php echo $u->id; ?>"><i class="fa fa-remove"></i> Hapus</button>
-            </td>
-	    </tr>
-	    <?php }} ?>
     </tbody>
     <tfoot>
     	<tr>
@@ -38,40 +23,46 @@
     </tfoot>
 </table>
 
-  <!-- modal add user -->
-  <form action="<?php echo base_url(); ?>index.php/home/tambah_user_aksi" method="POST">
-    <div class="modal fade" id="tbh_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <h4 class="modal-title">Tambah User</h4>
-          </div>
-          <div class="modal-body">
-            <div class="col-md-12 center-margin">
-              <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" maxlength="20" placeholder="Username">
-              </div>
-              <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" maxlength="20" placeholder="Password">
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-            <button type="submit" name="tbh_mapel" class="btn btn-primary">Tambah!</button>
-          </div>
-        </div>
-      </div>
+<!-- modal add user -->
+<form method="POST" class="user-simpan">
+	<div class="modal fade" id="tbh_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+        	<div class="modal-content">
+          		<div class="modal-header">
+           			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            		<h4 class="modal-title">Tambah User</h4>
+          		</div>
+          		<div class="modal-body">
+            		<div class="col-md-12 center-margin">
+              			<div class="form-group">
+                			<label>Username</label>
+                			<input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="Username">
+              			</div>
+			            <div class="form-group">
+			            	<label>Password</label>
+			            	<input type="password" name="password" id="password" class="form-control" maxlength="20" placeholder="Password">
+			            </div>
+            			<div class="form-group">
+			                <div class="progress">
+								<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+							    </div>
+							</div>
+              			</div>
+					</div>
+          		</div>
+		        <div class="modal-footer">
+		            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+		            <a class="btn btn-primary simpan_data">Tambah!</a>
+		        </div>
+        	</div>
+		</div>
     </div>
-  </form>
-  <!-- /modal add user -->
+</form>
+<!-- /modal add user -->
 
 <?php foreach($user as $u){ ?>
   <!-- modal edit user -->
-  <form action="<?php echo base_url(); ?>index.php/home/ubah_user_aksi" method="POST">
+  <form method="POST" class="user-update">
     <div class="modal fade" id="ubh<?php echo $u->id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -84,7 +75,7 @@
               <div class="form-group">
                 <label>Username</label>
                 <input type="hidden" name="id" value="<?php echo $u->id ?>">
-                <input type="text" name="username" class="form-control" maxlength="20" placeholder="Username" value="<?php echo $u->username ?>" readonly="">
+                <input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="Username" value="<?php echo $u->username ?>" readonly="">
               </div>
               <div class="form-group">
                 <label>Password Lama</label>
@@ -94,11 +85,17 @@
                 <label>Password Lama</label>
                 <input type="password" name="password" class="form-control" maxlength="20" placeholder="Masukkan password baru">
               </div>
+              <div class="form-group">
+                <div class="progress">
+					<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+				    </div>
+				</div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-            <button type="submit" name="tbh_mapel" class="btn btn-primary">Ubah!</button>
+            <a class="btn btn-primary simpan_data">Ubah!</a>
           </div>
         </div>
       </div>
@@ -128,3 +125,60 @@
   </form>
   <!-- /modal remove user -->
 <?php } ?>
+
+<script type="text/javascript">
+	
+      /* -------- INSERT DATA AJAX JQUERY -------- */
+      $(document).ready(function(){
+        $(".simpan_data").click(function(){
+          var data = $('.user-simpan').serialize();
+          $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url(); ?>index.php/home/tambah_user_aksi",
+            data: data,
+            beforeSend: function(){
+	            $('.progress-bar-striped').animate({width:'60%'}, 1500);
+	            $('.simpan_data').attr('disabled','true');
+            },
+            success: function() {
+              $('.progress-bar-striped').animate({width:'100%'}, 0);
+              setTimeout( function() { 
+                $('#tbh_user').modal('hide');
+                $('#username, #password').val(''); 
+                $('.progress-bar-striped').animate({width:'0%'}, 0);
+              }, 1000 );
+              	$('.simpan_data').removeAttr('disabled');
+            }
+          });
+        });
+      /* -------- AKHIR INSERT DATA AJAX JQUERY -------- */
+
+
+      	selesai();
+
+  });
+		function selesai() {
+			setTimeout(function() {
+				update();
+				selesai();
+			}, 1000);
+		}
+		 
+		function update() {
+			$.getJSON("tampil_user", function(data) {
+				$("tbody").empty();
+				$.each(data.result, function() {
+					$("tbody").append("\
+						<tr>\
+							<td>"+this['no']+"</td>\
+							<td>"+this['username']+"</td>\
+							<td>\
+								<button class='btn btn-default' data-toggle='modal' data-target='#ubh"+this['id']+"'><i class='fa fa-edit'></i> Ubah Modal</button>\
+								<button class='btn btn-danger' data-toggle='modal' data-target='#hps"+this['id']+"'><i class='fa fa-remove'></i> Hapus</button>\
+							</td>\
+						</tr>");
+				});
+			});
+      }
+</script>
+<tr>

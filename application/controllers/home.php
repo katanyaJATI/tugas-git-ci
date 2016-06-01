@@ -112,6 +112,11 @@ class Home extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
+	function tampil_user(){ // Load halaman semua user
+		$data['user'] = $this->m_data->ambil_dataus()->result(); // meng-generate hasil query menjadi array
+		$this->load->view('tampil_user', $data);
+	}
+
 	function tambah_user(){ // Load halaman tambah user
 		$this->load->view('templates/header');
 		$this->load->view('view_menu');
@@ -135,7 +140,7 @@ class Home extends CI_Controller{
 	function hapus_user($id){ // Aksi hapus user, $id berguna untuk menangkap data id yang di kirim melalui url
 		$where = array('id' => $id);
 		$this->m_data->hapus_dataus($where,'tb_user');
-		
+		echo"<script>alert('Data Berhasil Dihapus!');window.location='../lihat_user'</script>";
 	}
 
 	function ubah_user($id){

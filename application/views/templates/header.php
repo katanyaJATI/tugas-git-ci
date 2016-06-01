@@ -18,6 +18,8 @@
     <link href="<?php echo base_url(); ?>assets/css/heroic-features.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/fonts/css/font-awesome.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
