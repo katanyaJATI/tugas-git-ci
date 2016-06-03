@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+  <head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 		<title>Login Form</title>
@@ -51,7 +51,7 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    /* -------- INSERT DATA AJAX JQUERY -------- */
+    /* -------- LOGIN AJAX JQUERY -------- */
         $(".login").click(function(){
           var data = $('.login-form').serialize();
           $.ajax({
@@ -78,6 +78,6 @@
               }
           });
         });
-    /* -------- AKHIR INSERT DATA AJAX JQUERY -------- */ 
+    /* -------- LOGIN DATA AJAX JQUERY -------- */ 
   });
 </script>

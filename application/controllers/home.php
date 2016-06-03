@@ -102,8 +102,15 @@ class Home extends CI_Controller{
 		$where = array(
 			'id' => $id
 			);
-		$this->m_data->update_databm($where,$data,'tb_bookmark');
-		echo"<script>alert('Data Berhasil Dirubah!');window.location='../home/lihat_bookmark'</script>";
+		$ubah = $this->m_data->update_databm($where,$data,'tb_bookmark');
+		if(!$ubah){
+			echo"ok";
+		}else{
+			echo"gagal update";
+			print_r($data);
+			print_r($where);
+		}
+
 		//redirect('home/lihat_bookmark');
 	}
 
@@ -175,12 +182,14 @@ class Home extends CI_Controller{
 		$cek_pw = $this->m_data->cek_password("tb_user",$where)->num_rows(); // Cek Password lama
 
 		if($cek_pw > 0){
-		$this->m_data->update_dataus($where,$data,'tb_user');
-		echo"<script>alert('Data Berhasil Dirubah!');window.location='../home/lihat_user'</script>";
-		//redirect('home/lihat_user');
-		
+			$this->m_data->update_dataus($where,$data,'tb_user');
+			echo"ok";
+			//redirect('home/lihat_user');
 		}else{
-		echo"<script>alert('Password yang anda masukkan salah!');window.history.back();</script>";
+			echo"gagal";
+			print_r($data);
+			print_r($where);
+			
 		}
 
 	}

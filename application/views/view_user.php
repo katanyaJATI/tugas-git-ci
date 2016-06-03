@@ -61,47 +61,51 @@
 <!-- /modal add user -->
 
 <?php foreach($user as $u){ ?>
-  <!-- modal edit user -->
-  <form method="POST" class="user-ubah">
+<!-- modal edit user -->
+<form method="POST" class="user-ubah<?php echo $u->id ?>">
     <div class="modal fade" id="ubh<?php echo $u->id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <h4 class="modal-title">Ubah User</h4>
-          </div>
-          <div class="modal-body">
-            <div class="col-md-12 center-margin">
-              <div class="form-group">
-                <label>Username</label>
-                <input type="hidden" name="id" id="id" value="<?php echo $u->id ?>">
-                <input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="Username" value="<?php echo $u->username ?>" readonly="">
-              </div>
-              <div class="form-group">
-                <label>Password Lama</label>
-                <input type="password" name="password_lm" id="password_lm" class="form-control" maxlength="20" placeholder="Masukkan password lama">
-              </div>
-              <div class="form-group">
-                <label>Password Baru</label>
-                <input type="password" name="password" id="password" class="form-control" maxlength="20" placeholder="Masukkan password baru">
-              </div>
-              <div class="form-group">
-                <div class="progress">
-					<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-				    </div>
-				</div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-            <a class="btn btn-primary ubah_data">Ubah!</a>
-          </div>
-        </div>
-      </div>
+    	<div class="modal-dialog">
+        	<div class="modal-content">
+	        	<div class="modal-header">
+	            	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            		<h4 class="modal-title">Ubah User</h4>
+          		</div>
+          		<div class="modal-body">
+            		<div class="col-md-12 center-margin">
+		            	<div class="form-group">
+		                	<label>Username</label>
+		                	<input type="hidden" name="id" id="id" value="<?php echo $u->id ?>">
+		                	<input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="Username" value="<?php echo $u->username ?>" readonly="">
+		            	</div>
+              			<div class="form-group">
+                			<label>Password Lama</label>
+                			<input type="password" name="password_lm" id="password_lm" class="form-control" maxlength="20" placeholder="Masukkan password lama">
+			            </div>
+            			<div class="form-group">
+                			<label>Password Baru</label>
+			                <input type="password" name="password" id="password" class="form-control" maxlength="20" placeholder="Masukkan password baru">
+            			</div>
+			            <div class="form-group">
+            			    <div class="progress">
+								<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+				    			</div>
+							</div>
+            			</div>
+			            <div class="form-group">
+            			    <div class="alert-euy">
+							</div>
+            			</div>
+            		</div>
+          		</div>
+          		<div class="modal-footer">
+		            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+		            <a class="btn btn-primary ubah_data" id="<?php echo $u->id ?>">Ubah!</a>
+		        </div>
+        	</div>
+    	</div>
     </div>
-  </form>
-  <!-- /modal edit user -->
+</form>
+<!-- /modal edit user -->
 
 
   <!-- modal remove user -->
@@ -110,7 +114,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <h4 class="modal-title">Hapus Kelas</h4>
+            <h4 class="modal-title">Hapus User</h4>
           </div>
           <div class="modal-body">
             <center><p>Apakah Anda Yakin Akan Mengkapus Data User : <strong><?php echo $u->username; ?></strong> ?</p></center>
@@ -152,6 +156,47 @@
         });
 		/* -------- AKHIR INSERT DATA AJAX JQUERY -------- */	
 
+
+		/* -------- UPDATE DATA AJAX JQUERY -------- */
+        $(".ubah_data").click(function(){
+       		var id = $(this).attr('id');
+       		var data = $('.user-ubah'+id).serialize();
+        	$.ajax({
+	            type: 'POST',
+	            url: "<?php echo base_url(); ?>index.php/home/ubah_user_aksi",
+	            data: data,
+	            beforeSend: function(){
+		            $('.progress-bar-striped').animate({width:'60%'}, 1500);
+		            $('.ubah_data').attr('disabled','true');
+	            },
+            	success: function(response) {
+					if(response == "ok"){
+			            $('.progress-bar-striped').animate({width:'100%'}, 0);
+			            $(".alert-euy").html("<div class='form-group'><div class='alert alert-success' role='alert'><i class='fa fa-check'></i> Data Berhasil Dirubah</div></div>");
+	              		$('.ubah_data').removeAttr('disabled');
+			            setTimeout( function() { 
+			                $('#ubh'+id).modal('hide'); 
+			                $('.progress-bar-striped').animate({width:'0%'}, 0);
+	              			$(".alert-euy").empty();
+	              			$('#password, #password_lm').val('');
+			            }, 1500 );
+    				}else{
+			            $('.progress-bar-striped').animate({width:'100%'}, 0);
+			            $(".alert-euy").html("<div class='form-group'><div class='alert alert-danger' role='alert'><i class='fa fa-remove'></i> Harap Periksa Password Lama Anda!</div></div>");
+	              		$('.ubah_data').removeAttr('disabled');
+	              		setTimeout( function() { 
+			                $('#ubh'+id).modal('hide'); 
+			                $('.progress-bar-striped').animate({width:'0%'}, 0);
+	              			$(".alert-euy").empty();
+	              			$('#password, #password_lm').val('');
+	              		}, 1500);
+    				}
+            	}
+        	});
+        });
+		/* -------- AKHIR UPDATE DATA AJAX JQUERY -------- */
+
+
 		/* -------- DELETE DATA AJAX JQUERY -------- */
 		$(".delete_data").click(function(){
 			var id = $(this).attr('id');
@@ -174,7 +219,7 @@
 			setTimeout(function() {
 				load();
 				refreshdata();
-			}, 1000);
+			}, 3000);
 		}
 		 
 		function load() {
