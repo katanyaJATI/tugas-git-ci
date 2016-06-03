@@ -7,6 +7,7 @@
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/fonts/css/font-awesome.min.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -22,15 +23,16 @@
           <h1 class="text-center">Login</h1>
       </div>
       <div class="modal-body">
-          <form class="form col-md-12 center-block" action="<?php echo base_url('index.php/login/aksi_login'); ?>" method="POST">
+          <form class="form col-md-12 center-block login-form" method="POST">
+            <div class="alert-euy"></div>
             <div class="form-group">
-              <input type="text" name="username" class="form-control input-lg" placeholder="Username">
+              <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Username">
             </div>
             <div class="form-group">
-              <input type="password" name="password" class="form-control input-lg" placeholder="Password">
+              <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password">
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+              <a class="btn btn-primary btn-lg btn-block login">Sign In</a>
             </div>
           </form>
       </div>
@@ -42,6 +44,40 @@
 </div>
 	<!-- script references -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 	</body>
 </html>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    /* -------- INSERT DATA AJAX JQUERY -------- */
+        $(".login").click(function(){
+          var data = $('.login-form').serialize();
+          $.ajax({
+              type: 'POST',
+              url: "<?php echo base_url('index.php/login/aksi_login'); ?>",
+              data: data,
+              beforeSend: function(){
+                $('.login').attr('disabled','true');
+                $('#username').attr('disabled','true');
+                $('#password').attr('disabled','true');
+                $(".alert-euy").html("<div class='form-group'><div class='alert alert-info' role='alert'><i class='fa fa-refresh fa-spin fa-fw'></i><span class='sr-only'>Loading...</span> Pengecekan...</div></div>");
+              },
+              success: function(response) {
+                if(response=="Login berhasil!"){
+                  $(".alert-euy").html("<div class='form-group'><div class='alert alert-success' role='alert'><i class='fa fa-check'></i> "+response+"</div></div>");
+                  // $('.login').removeAttr('disabled');
+                  setTimeout( function() { window.location = 'index.php/home'; }, 1500);
+                }else{
+                  $(".alert-euy").html("<div class='form-group'><div class='alert alert-danger' role='alert'><i class='fa fa-remove'></i> "+response+"</div></div>");
+                  $('.login').removeAttr('disabled');
+                  $('#username').removeAttr('disabled','true');
+                  $('#password').removeAttr('disabled','true');
+                }
+              }
+          });
+        });
+    /* -------- AKHIR INSERT DATA AJAX JQUERY -------- */ 
+  });
+</script>

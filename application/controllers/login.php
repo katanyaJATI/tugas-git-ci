@@ -32,10 +32,11 @@ class Login extends CI_Controller{
 				);
 
 			$this->session->set_userdata($data_session);
-			redirect(base_url("index.php/home/"));
+			//redirect(base_url("index.php/home/"));
+			echo"Login berhasil!";
 		
 		}else{
-			echo"<script>alert('Username / Password Salah!');window.history.back();</script>";
+			echo"Login Gagal... Periksa kembali username/password anda";
 			//echo"<center><h2>Username dan password salah! Harap Periksa <a href='../../'>kembali</a></h2></center>";
 		}
 	}

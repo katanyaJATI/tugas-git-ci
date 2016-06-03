@@ -62,7 +62,7 @@
 
 <?php foreach($user as $u){ ?>
   <!-- modal edit user -->
-  <form method="POST" class="user-update">
+  <form method="POST" class="user-ubah">
     <div class="modal fade" id="ubh<?php echo $u->id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -74,16 +74,16 @@
             <div class="col-md-12 center-margin">
               <div class="form-group">
                 <label>Username</label>
-                <input type="hidden" name="id" value="<?php echo $u->id ?>">
+                <input type="hidden" name="id" id="id" value="<?php echo $u->id ?>">
                 <input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="Username" value="<?php echo $u->username ?>" readonly="">
               </div>
               <div class="form-group">
                 <label>Password Lama</label>
-                <input type="password" name="password_lm" class="form-control" maxlength="20" placeholder="Masukkan password lama">
+                <input type="password" name="password_lm" id="password_lm" class="form-control" maxlength="20" placeholder="Masukkan password lama">
               </div>
               <div class="form-group">
-                <label>Password Lama</label>
-                <input type="password" name="password" class="form-control" maxlength="20" placeholder="Masukkan password baru">
+                <label>Password Baru</label>
+                <input type="password" name="password" id="password" class="form-control" maxlength="20" placeholder="Masukkan password baru">
               </div>
               <div class="form-group">
                 <div class="progress">
@@ -95,7 +95,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-            <a class="btn btn-primary simpan_data">Ubah!</a>
+            <a class="btn btn-primary ubah_data">Ubah!</a>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-            <?php echo anchor('home/hapus_user/'.$u->id,'<i class="fa fa-trash"> Hapus</i>', 'class="btn btn-danger hapus_data"'); ?>
+            <a class="btn btn-danger delete_data" id="<?php echo $u->id ?>"><i class="fa fa-trash"></i> Hapus</a>
           </div>
         </div>
       </div>
@@ -127,44 +127,57 @@
 <?php } ?>
 
 <script type="text/javascript">
-	
-      /* -------- INSERT DATA AJAX JQUERY -------- */
-      $(document).ready(function(){
+    $(document).ready(function(){
+		/* -------- INSERT DATA AJAX JQUERY -------- */
         $(".simpan_data").click(function(){
-          var data = $('.user-simpan').serialize();
-          $.ajax({
-            type: 'POST',
-            url: "<?php echo base_url(); ?>index.php/home/tambah_user_aksi",
-            data: data,
-            beforeSend: function(){
-	            $('.progress-bar-striped').animate({width:'60%'}, 1500);
-	            $('.simpan_data').attr('disabled','true');
-            },
-            success: function() {
-              $('.progress-bar-striped').animate({width:'100%'}, 0);
-              setTimeout( function() { 
-                $('#tbh_user').modal('hide');
-                $('#username, #password').val(''); 
-                $('.progress-bar-striped').animate({width:'0%'}, 0);
-              }, 1000 );
-              	$('.simpan_data').removeAttr('disabled');
-            }
-          });
+       		var data = $('.user-simpan').serialize();
+        	$.ajax({
+	            type: 'POST',
+	            url: "<?php echo base_url(); ?>index.php/home/tambah_user_aksi",
+	            data: data,
+	            beforeSend: function(){
+		            $('.progress-bar-striped').animate({width:'60%'}, 1500);
+		            $('.simpan_data').attr('disabled','true');
+	            },
+            	success: function() {
+		            $('.progress-bar-striped').animate({width:'100%'}, 0);
+		            setTimeout( function() { 
+		                $('#tbh_user').modal('hide');
+		                $('#username, #password').val(''); 
+		                $('.progress-bar-striped').animate({width:'0%'}, 0);
+		            }, 1000 );
+              		$('.simpan_data').removeAttr('disabled');
+            	}
+        	});
         });
-      /* -------- AKHIR INSERT DATA AJAX JQUERY -------- */
+		/* -------- AKHIR INSERT DATA AJAX JQUERY -------- */	
 
+		/* -------- DELETE DATA AJAX JQUERY -------- */
+		$(".delete_data").click(function(){
+			var id = $(this).attr('id');
+			$.ajax({
+			    type:'POST',
+			    url:'hapus_user/'+id,
+			    success:function(data) {
+			    	if(data) {   // DO SOMETHING
+		        		$('#hps'+id).modal('hide');
+		        	} else { }
+		   		}
+			});
+		});
+     	/* -------- AKHIR DELETE DATA AJAX JQUERY -------- */
 
-      	selesai();
-
-  });
-		function selesai() {
+	    /* -------- READ DATA AJAX JQUERY -------- */
+	    refreshdata();
+	    /* -------- AKHIR READ DATA AJAX JQUERY -------- */
+		function refreshdata() {
 			setTimeout(function() {
-				update();
-				selesai();
+				load();
+				refreshdata();
 			}, 1000);
 		}
 		 
-		function update() {
+		function load() {
 			$.getJSON("tampil_user", function(data) {
 				$("tbody").empty();
 				$.each(data.result, function() {
@@ -179,6 +192,7 @@
 						</tr>");
 				});
 			});
-      }
+    	}
+    });
 </script>
 <tr>

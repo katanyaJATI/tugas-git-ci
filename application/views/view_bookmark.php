@@ -14,21 +14,6 @@
         </tr>
     </thead>
     <tbody>
-    <?php 
-		$no = 0;
-		foreach($user as $u){
-			$no++; 
-			?>
-    	<tr>
-        	<td><?php echo $no; ?></td>
-            <td><?php echo anchor('home/detail_bookmark/'.$u->id,$u->title);  ?></td>
-            <td><?php echo anchor($u->url, $u->url, 'target="_blank"'); ?></td>
-            <td>
-            	<?php echo anchor('home/ubah_bookmark/'.$u->id,'<i class="fa fa-edit"> Ubah</i>', 'class="btn btn-default"'); ?>
-            	<button class="btn btn-danger" data-toggle="modal" data-target="#hps<?php echo $u->id; ?>"><i class="fa fa-remove"></i> Hapus</button>
-            </td>
-	    </tr>
-	    <?php } ?>
     </tbody>
     <tfoot>
     	<tr>
@@ -54,11 +39,11 @@
             		<div class="col-md-12 center-margin">
               			<div class="form-group">
                 			<label>Title</label>
-                			<input type="text" name="title" id="title" class="form-control" maxlength="20" placeholder="Title">
+                			<input type="text" name="title" id="title" class="form-control" placeholder="Title">
               			</div>
 			            <div class="form-group">
 			            	<label>Url</label>
-			            	<input type="text" name="url" id="url" class="form-control" maxlength="20" placeholder="Url">
+			            	<input type="text" name="url" id="url" class="form-control" placeholder="Url">
 			            </div>
 			            <div class="form-group">
 			            	<label>Deskripsi</label>
@@ -96,7 +81,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-            <?php echo anchor('home/hapus_bookmark/'.$u->id,'<i class="fa fa-trash"> Hapus</i>', 'class="btn btn-danger"'); ?>
+            <a class="btn btn-danger delete_data" id="<?php echo $u->id ?>"><i class="fa fa-trash"></i> Hapus</a>
           </div>
         </div>
       </div>
@@ -106,29 +91,72 @@
 
 
 <script type="text/javascript">
-	
-      /* -------- INSERT DATA AJAX JQUERY -------- */
-      $(document).ready(function(){
+    $(document).ready(function(){
+		/* -------- INSERT DATA AJAX JQUERY -------- */
         $(".simpan_data").click(function(){
-          var data = $('.bookmark-simpan').serialize();
-          $.ajax({
-            type: 'POST',
-            url: "<?php echo base_url(); ?>index.php/home/tambah_bookmark_aksi",
-            data: data,
-            beforeSend: function(){
-              $('.progress-bar-striped').animate({width:'60%'}, 1500);
-            },
-            success: function() {
-              $('.progress-bar-striped').animate({width:'100%'}, 0);
-              setTimeout( function() { 
-                $('#tbh_bookmark').modal('hide');
-                $('#title, #url, #description').val(''); 
-                $('.progress-bar-striped').animate({width:'0%'}, 0);
-              }, 1000 );
-              $('.tampildata').load("view_user.php");
-            }
-          });
+       		var data = $('.bookmark-simpan').serialize();
+        	$.ajax({
+	            type: 'POST',
+	            url: "<?php echo base_url(); ?>index.php/home/tambah_bookmark_aksi",
+	            data: data,
+	            beforeSend: function(){
+		            $('.progress-bar-striped').animate({width:'60%'}, 1500);
+		            $('.simpan_data').attr('disabled','true');
+	            },
+            	success: function() {
+		            $('.progress-bar-striped').animate({width:'100%'}, 0);
+		            setTimeout( function() { 
+		                $('#tbh_bookmark').modal('hide');
+		                $('#title, #url, #description').val(''); 
+		                $('.progress-bar-striped').animate({width:'0%'}, 0);
+		            }, 1000 );
+              		$('.simpan_data').removeAttr('disabled');
+            	}
+        	});
         });
-      });
-      /* -------- AKHIR INSERT DATA AJAX JQUERY -------- */
+		/* -------- AKHIR INSERT DATA AJAX JQUERY -------- */	
+
+		/* -------- DELETE DATA AJAX JQUERY -------- */
+		$(".delete_data").click(function(){
+			var id = $(this).attr('id');
+			$.ajax({
+			    type:'POST',
+			    url:'hapus_bookmark/'+id,
+			    success:function(data) {
+			    	if(data) {   // DO SOMETHING
+		        		$('#hps'+id).modal('hide');
+		        	} else { }
+		   		}
+			});
+		});
+     	/* -------- AKHIR DELETE DATA AJAX JQUERY -------- */
+
+	    /* -------- READ DATA AJAX JQUERY -------- */
+	    refreshdata();
+	    /* -------- AKHIR READ DATA AJAX JQUERY -------- */
+		function refreshdata() {
+			setTimeout(function() {
+				load();
+				refreshdata();
+			}, 1000);
+		}
+		 
+		function load() {
+			$.getJSON("tampil_bookmark", function(data) {
+				$("tbody").empty();
+				$.each(data.result, function() {
+					$("tbody").append("\
+						<tr>\
+							<td>"+this['no']+"</td>\
+							<td>"+this['title']+"</td>\
+							<td>"+this['url']+"</td>\
+							<td>\
+								<button class='btn btn-default' data-toggle='modal' data-target='#ubh"+this['id']+"'><i class='fa fa-edit'></i> Ubah Modal</button>\
+								<button class='btn btn-danger' data-toggle='modal' data-target='#hps"+this['id']+"'><i class='fa fa-remove'></i> Hapus</button>\
+							</td>\
+						</tr>");
+				});
+			});
+    	}
+    });
 </script>
