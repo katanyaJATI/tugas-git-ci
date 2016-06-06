@@ -19,9 +19,24 @@
     <script src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-      $(function () {
-        $("#tabel").DataTable();
-      });
+      var user = $('#tabel_user').DataTable( {
+        ajax: "tampil_user",
+        columns: [
+          { "data": "no" },
+          { "data": "username" },
+          { "data": "id" }
+        ]
+      } );
+      
+      var bookmark = $('#tabel_bookmark').DataTable( {
+        ajax: "tampil_bookmark",
+        columns: [
+          { "data": "no" },
+          { "data": "title" },
+          { "data": "url" },
+          { "data": "id" }
+        ]
+      } );
     </script>
 
 </body>

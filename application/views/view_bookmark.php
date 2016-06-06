@@ -1,9 +1,10 @@
-<table id="tabel" class="table table-striped ">
+<table id="tabel_bookmark" class="table table-striped ">
 	<thead>
     	<tr>
         	<th colspan="4">
         		<a href="<?php echo base_url(); ?>index.php/home/tambah_bookmark" class="btn btn-sm btn-default"><i class="fa fa-plus"></i> Tambah Bookmark</a>
         		<button class="btn btn-sm btn-default" data-toggle="modal" data-target="#tbh_bookmark"><i class="fa fa-plus"></i> Tambah Bookmark Modal</button>
+        		<a class="btn btn-sm btn-default refresh"><i class="fa fa-refresh"></i> REFRESH</a>
         	</th>
         </tr>
     	<tr>
@@ -13,8 +14,6 @@
             <th>Aksi</th>
         </tr>
     </thead>
-    <tbody>
-    </tbody>
     <tfoot>
     	<tr>
 	        <th>No</th>
@@ -140,6 +139,11 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+
+    	$(".refresh").click(function(){
+    		bookmark.ajax.reload();
+    	});
+
 		/* -------- INSERT DATA AJAX JQUERY -------- */
         $(".simpan_data").click(function(){
        		var data = $('.bookmark-simpan').serialize();
@@ -154,6 +158,7 @@
             	success: function() {
 		            $('.progress-bar-striped').animate({width:'100%'}, 0);
               		$('.simpan_data').removeAttr('disabled');
+              		bookmark.ajax.reload();
 		            setTimeout( function() { 
 		                $('#tbh_bookmark').modal('hide');
 		                $('#title, #url, #description').val(''); 
@@ -181,6 +186,7 @@
 			            $('.progress-bar-striped').animate({width:'100%'}, 0);
 			            $(".alert-euy").html("<div class='form-group'><div class='alert alert-success' role='alert'><i class='fa fa-check'></i> Data Berhasil Dirubah</div></div>");
 	              		$('.ubah_data').removeAttr('disabled');
+	              		bookmark.ajax.reload();
 			            setTimeout( function() { 
 			                $('#ubh'+id).modal('hide'); 
 			                $('.progress-bar-striped').animate({width:'0%'}, 0);
@@ -210,38 +216,11 @@
 			    success:function(data) {
 			    	if(data) {   // DO SOMETHING
 		        		$('#hps'+id).modal('hide');
+		        		bookmark.ajax.reload();
 		        	} else { }
 		   		}
 			});
 		});
      	/* -------- AKHIR DELETE DATA AJAX JQUERY -------- */
-
-	    /* -------- READ DATA AJAX JQUERY -------- */
-	    refreshdata();
-	    /* -------- AKHIR READ DATA AJAX JQUERY -------- */
-		function refreshdata() {
-			setTimeout(function() {
-				load();
-				refreshdata();
-			}, 3000);
-		}
-		 
-		function load() {
-			$.getJSON("tampil_bookmark", function(data) {
-				$("tbody").empty();
-				$.each(data.result, function() {
-					$("tbody").append("\
-						<tr>\
-							<td>"+this['no']+"</td>\
-							<td>"+this['title']+"</td>\
-							<td>"+this['url']+"</td>\
-							<td>\
-								<button class='btn btn-default' data-toggle='modal' data-target='#ubh"+this['id']+"'><i class='fa fa-edit'></i> Ubah Modal</button>\
-								<button class='btn btn-danger' data-toggle='modal' data-target='#hps"+this['id']+"'><i class='fa fa-remove'></i> Hapus</button>\
-							</td>\
-						</tr>");
-				});
-			});
-    	}
     });
 </script>

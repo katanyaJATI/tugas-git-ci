@@ -144,9 +144,17 @@ class Home extends CI_Controller{
 			'username' => $username,
 			'password' => md5($password)
 			);
-		$this->m_data->input_dataus($data,'tb_user');
-		echo"<script>alert('Data Berhasil Ditambah!');window.location='../home/lihat_user'</script>";
-		//redirect('home/lihat_user');
+		$where = array(
+			'username' => $username
+			);
+		$cek = $this->m_data->cek_user("tb_user",$where)->num_rows();
+		if($cek == 0){
+			$this->m_data->input_dataus($data,'tb_user');
+			echo"ok";
+			//redirect('home/lihat_user');
+		}else{
+			echo"Username Telah Terdaftar!";
+		}
 	}
 
 	function hapus_user($id){ // Aksi hapus user, $id berguna untuk menangkap data id yang di kirim melalui url

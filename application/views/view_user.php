@@ -1,9 +1,10 @@
-<table id="tabel" class="table table-striped tampildata">
+<table id="tabel_user" class="table table-striped tampildata">
 	<thead>
     	<tr>
         	<th colspan="4">
         		<a href="<?php echo base_url(); ?>index.php/home/tambah_user" class="btn btn-sm btn-default"><i class="fa fa-plus"></i> Tambah User</a>
         		<button class="btn btn-sm btn-default" data-toggle="modal" data-target="#tbh_user"><i class="fa fa-plus"></i> Tambah User Modal</button>
+        		<a class="btn btn-sm btn-default refresh"><i class="fa fa-refresh"></i> REFRESH</a>
         	</th>
         </tr>
     	<tr>
@@ -12,8 +13,6 @@
             <th>Aksi</th>
         </tr>
     </thead>
-    <tbody>
-    </tbody>
     <tfoot>
     	<tr>
 	        <th>No</th>
@@ -48,6 +47,10 @@
 							    </div>
 							</div>
               			</div>
+			            <div class="form-group">
+            			    <div class="alert-euy">
+							</div>
+            			</div>
 					</div>
           		</div>
 		        <div class="modal-footer">
@@ -132,6 +135,11 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+
+    	$(".refresh").click(function(){
+    		user.ajax.reload();
+    	});
+
 		/* -------- INSERT DATA AJAX JQUERY -------- */
         $(".simpan_data").click(function(){
        		var data = $('.user-simpan').serialize();
@@ -143,14 +151,25 @@
 		            $('.progress-bar-striped').animate({width:'60%'}, 1500);
 		            $('.simpan_data').attr('disabled','true');
 	            },
-            	success: function() {
-		            $('.progress-bar-striped').animate({width:'100%'}, 0);
-		            setTimeout( function() { 
-		                $('#tbh_user').modal('hide');
-		                $('#username, #password').val(''); 
-		                $('.progress-bar-striped').animate({width:'0%'}, 0);
-		            }, 1000 );
-              		$('.simpan_data').removeAttr('disabled');
+            	success: function(response) {
+            		if(response == "ok"){
+			            setTimeout( function() { 
+			                $('#tbh_user').modal('hide');
+			                $('#username, #password').val(''); 
+			                $('.progress-bar-striped').animate({width:'0%'}, 0);
+			            }, 1000 );
+			            $('.progress-bar-striped').animate({width:'100%'}, 0);
+	              		$('.simpan_data').removeAttr('disabled');
+	              		user.ajax.reload();
+	              	}else{
+	              		$(".alert-euy").html("<div class='form-group'><div class='alert alert-danger' role='alert'><i class='fa fa-remove'></i> "+response+"</div></div>");
+	              		setTimeout( function() { 
+			                $('#username, #password').val(''); 
+			                $('.progress-bar-striped').animate({width:'0%'}, 0);
+	              			$(".alert-euy").empty();
+	              			$('.simpan_data').removeAttr('disabled');
+			            }, 1000 );
+	              	}
             	}
         	});
         });
@@ -206,38 +225,13 @@
 			    success:function(data) {
 			    	if(data) {   // DO SOMETHING
 		        		$('#hps'+id).modal('hide');
+		        		user.ajax.reload();
 		        	} else { }
 		   		}
 			});
 		});
      	/* -------- AKHIR DELETE DATA AJAX JQUERY -------- */
 
-	    /* -------- READ DATA AJAX JQUERY -------- */
-	    refreshdata();
-	    /* -------- AKHIR READ DATA AJAX JQUERY -------- */
-		function refreshdata() {
-			setTimeout(function() {
-				load();
-				refreshdata();
-			}, 3000);
-		}
-		 
-		function load() {
-			$.getJSON("tampil_user", function(data) {
-				$("tbody").empty();
-				$.each(data.result, function() {
-					$("tbody").append("\
-						<tr>\
-							<td>"+this['no']+"</td>\
-							<td>"+this['username']+"</td>\
-							<td>\
-								<button class='btn btn-default' data-toggle='modal' data-target='#ubh"+this['id']+"'><i class='fa fa-edit'></i> Ubah Modal</button>\
-								<button class='btn btn-danger' data-toggle='modal' data-target='#hps"+this['id']+"'><i class='fa fa-remove'></i> Hapus</button>\
-							</td>\
-						</tr>");
-				});
-			});
-    	}
     });
 </script>
 <tr>

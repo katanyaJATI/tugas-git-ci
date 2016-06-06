@@ -5,6 +5,10 @@ class M_data extends CI_Model{
 		return $this->db->get('tb_user');
 	}
 
+	function cek_user($table,$where){
+		return $this->db->get_where($table,$where);
+	}
+
 	function input_dataus($data,$table){ // Inser data user
 		$this->db->insert($table,$data);
 	}
