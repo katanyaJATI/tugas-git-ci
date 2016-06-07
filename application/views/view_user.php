@@ -55,7 +55,7 @@
           		</div>
 		        <div class="modal-footer">
 		            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-		            <a class="btn btn-primary simpan_data">Tambah!</a>
+		            <button class="btn btn-primary simpan_data">Tambah!</button>
 		        </div>
         	</div>
 		</div>
@@ -63,10 +63,10 @@
 </form>
 <!-- /modal add user -->
 
-<?php foreach($user as $u){ ?>
+
 <!-- modal edit user -->
-<form method="POST" class="user-ubah<?php echo $u->id ?>">
-    <div class="modal fade" id="ubh<?php echo $u->id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form method="POST" class="user-ubah">
+    <div class="modal fade" id="ubh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     	<div class="modal-dialog">
         	<div class="modal-content">
 	        	<div class="modal-header">
@@ -77,8 +77,8 @@
             		<div class="col-md-12 center-margin">
 		            	<div class="form-group">
 		                	<label>Username</label>
-		                	<input type="hidden" name="id" id="id" value="<?php echo $u->id ?>">
-		                	<input type="text" name="username" id="username" class="form-control" maxlength="20" placeholder="Username" value="<?php echo $u->username ?>" readonly="">
+		                	<input type="hidden" class="id" name="id">
+		                	<input type="text" name="username" id="username" class="form-control username" maxlength="20" placeholder="Username" readonly="">
 		            	</div>
               			<div class="form-group">
                 			<label>Password Lama</label>
@@ -102,7 +102,7 @@
           		</div>
           		<div class="modal-footer">
 		            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-		            <a class="btn btn-primary ubah_data" id="<?php echo $u->id ?>">Ubah!</a>
+		            <button class="btn btn-primary ubah_data id_mem" id="id_mem">Ubah!</button>
 		        </div>
         	</div>
     	</div>
@@ -110,9 +110,8 @@
 </form>
 <!-- /modal edit user -->
 
-
   <!-- modal remove user -->
-    <div class="modal fade" id="hps<?php echo $u->id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="hps" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -120,18 +119,16 @@
             <h4 class="modal-title">Hapus User</h4>
           </div>
           <div class="modal-body">
-            <center><p>Apakah Anda Yakin Akan Mengkapus Data User : <strong><?php echo $u->username; ?></strong> ?</p></center>
+            <center><p>Apakah Anda Yakin Akan Mengkapus Data User : <strong class="username"></strong> ?</p></center>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-            <a class="btn btn-danger delete_data" id="<?php echo $u->id ?>"><i class="fa fa-trash"></i> Hapus</a>
+            <button class="btn btn-danger delete_data id_mem" id="id_mem"><i class="fa fa-trash"></i> Hapus</button>
           </div>
         </div>
       </div>
     </div>
-  </form>
-  <!-- /modal remove user -->
-<?php } ?>
+<!-- /modal remove user -->
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -179,7 +176,7 @@
 		/* -------- UPDATE DATA AJAX JQUERY -------- */
         $(".ubah_data").click(function(){
        		var id = $(this).attr('id');
-       		var data = $('.user-ubah'+id).serialize();
+       		var data = $('.user-ubah').serialize();
         	$.ajax({
 	            type: 'POST',
 	            url: "<?php echo base_url(); ?>index.php/home/ubah_user_aksi",
@@ -194,7 +191,7 @@
 			            $(".alert-euy").html("<div class='form-group'><div class='alert alert-success' role='alert'><i class='fa fa-check'></i> Data Berhasil Dirubah</div></div>");
 	              		$('.ubah_data').removeAttr('disabled');
 			            setTimeout( function() { 
-			                $('#ubh'+id).modal('hide'); 
+			                $('#ubh').modal('hide'); 
 			                $('.progress-bar-striped').animate({width:'0%'}, 0);
 	              			$(".alert-euy").empty();
 	              			$('#password, #password_lm').val('');
@@ -204,7 +201,7 @@
 			            $(".alert-euy").html("<div class='form-group'><div class='alert alert-danger' role='alert'><i class='fa fa-remove'></i> Harap Periksa Password Lama Anda!</div></div>");
 	              		$('.ubah_data').removeAttr('disabled');
 	              		setTimeout( function() { 
-			                $('#ubh'+id).modal('hide'); 
+			                $('#ubh').modal('hide'); 
 			                $('.progress-bar-striped').animate({width:'0%'}, 0);
 	              			$(".alert-euy").empty();
 	              			$('#password, #password_lm').val('');
@@ -224,13 +221,37 @@
 			    url:'hapus_user/'+id,
 			    success:function(data) {
 			    	if(data) {   // DO SOMETHING
-		        		$('#hps'+id).modal('hide');
+		        		$('#hps').modal('hide');
 		        		user.ajax.reload();
 		        	} else { }
 		   		}
 			});
 		});
      	/* -------- AKHIR DELETE DATA AJAX JQUERY -------- */
+
+
+		$('#ubh').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget) // Button that triggered the modal
+			var id = button.data('id') // Extract info from data-* attributes
+			var username = button.data('username') // Extract info from data-* attributes
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			var modal = $(this)
+			modal.find('.username').val(username)
+			modal.find('.id').val(id)
+			modal.find('.id_mem').attr('id_mem')
+		})
+
+		$('#hps').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget) // Button that triggered the modal
+			var id = button.data('id') // Extract info from data-* attributes
+			var username = button.data('username') // Extract info from data-* attributes
+			// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+			// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+			var modal = $(this)
+			modal.find('.username').text(username)
+			modal.find('.id_mem').attr('id', id)
+		})
 
     });
 </script>

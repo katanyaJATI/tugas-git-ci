@@ -20,6 +20,7 @@
     <script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
     <script type="text/javascript">
       var user = $('#tabel_user').DataTable( {
+        pageLength : 10,
         ajax: "tampil_user",
         columns: [
           { "data": "no" },
@@ -29,6 +30,7 @@
       } );
       
       var bookmark = $('#tabel_bookmark').DataTable( {
+        pageLength: 10,
         ajax: "tampil_bookmark",
         columns: [
           { "data": "no" },
